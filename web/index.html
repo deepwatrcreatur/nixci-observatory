@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="color-scheme" content="light">
+    <title>NixCI Observatory</title>
+    <link rel="stylesheet" href="/style.css">
+  </head>
+  <body>
+    <main class="page-shell">
+      <header class="masthead">
+        <div class="brand-lockup">
+          <div class="brand-mark" aria-hidden="true">N</div>
+          <div>
+            <p class="eyebrow">OPERATIONS / NIXCI</p>
+            <h1>Worker Observatory</h1>
+          </div>
+        </div>
+        <div class="masthead-meta">
+          <label class="theme-control"><span>THEME</span><select id="theme-select" aria-label="Color theme"><option value="warm">Warm paper</option><option value="sage">Sage linen</option><option value="chalk">Blue chalk</option></select></label>
+          <span class="live-indicator"><i></i> LIVE SAMPLING</span>
+          <span id="last-updated">Waiting for first sample…</span>
+        </div>
+      </header>
+
+      <section class="intro-row">
+        <div>
+          <p class="eyebrow">SAFE WORKER / HOST TELEMETRY</p>
+          <h2>Builds in motion, <em>at a glance.</em></h2>
+          <p class="intro-copy">A quiet view of Emerald’s system load, worker VM use, and NixCI-reported build activity.</p>
+        </div>
+        <div class="host-chip">
+          <span class="host-dot" id="host-dot"></span>
+          <div><span class="chip-label">OBSERVING HOST</span><strong id="hostname">—</strong></div>
+          <span class="chip-divider"></span>
+          <div><span class="chip-label">UPTIME</span><strong id="uptime">—</strong></div>
+        </div>
+      </section>
+
+      <section class="resource-grid" aria-label="Live system resources">
+        <article class="panel cpu-panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">PROCESSING</p><h3>CPU load</h3></div>
+            <strong class="metric-large"><span id="cpu-value">—</span><small>%</small></strong>
+          </div>
+          <canvas class="sparkline" id="cpu-chart" aria-label="CPU usage history"></canvas>
+          <div class="panel-foot"><span>System average</span><span id="load-averages">1m — · 5m — · 15m —</span></div>
+          <div class="core-grid" id="core-grid" aria-label="Per-core CPU utilization"></div>
+          <div class="core-caption" id="core-caption">Waiting for per-core sample</div>
+        </article>
+
+        <article class="panel memory-panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">MEMORY</p><h3>System memory</h3></div>
+            <strong class="metric-large"><span id="memory-value">—</span><small>%</small></strong>
+          </div>
+          <div class="meter-track"><div class="meter-fill sage" id="memory-fill"></div></div>
+          <div class="meter-labels"><strong id="memory-used">—</strong><span id="memory-total">— total</span></div>
+          <div class="memory-note"><span class="note-icon">↳</span><span id="memory-available">— available</span></div>
+          <div class="submetric-row">
+            <div><span class="chip-label">ROOT FILESYSTEM</span><strong id="disk-used">—</strong></div>
+            <div><span class="chip-label">1M LOAD</span><strong id="load-one">—</strong></div>
+          </div>
+        </article>
+
+        <article class="panel worker-panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">SAFE WORKER</p><h3>Emerald VM</h3></div>
+            <span class="state-pill state-unknown" id="worker-state"><i></i> UNKNOWN</span>
+          </div>
+          <div class="worker-readout">
+            <div class="worker-gauge" id="worker-gauge"><div><strong id="worker-cpu">—</strong><span>% host</span></div></div>
+            <div class="worker-details">
+              <div><span>Service</span><strong id="worker-substate">—</strong></div>
+              <div><span>Guest memory</span><strong id="worker-memory">—</strong></div>
+              <div><span>Restarts</span><strong id="worker-restarts">—</strong></div>
+              <div><span>Since</span><strong id="worker-since">—</strong></div>
+            </div>
+          </div>
+          <div class="worker-caption"><span class="caption-rule"></span><span>VM-level resource use; guest processes stay isolated.</span></div>
+        </article>
+      </section>
+
+      <section class="lower-grid">
+        <article class="panel process-panel">
+          <div class="section-heading">
+            <div><p class="eyebrow">LIVE SAMPLE</p><h3>Processes &amp; resources</h3></div>
+            <span class="quiet-label" id="process-count">Top processes</span>
+          </div>
+          <div class="process-table-wrap">
+            <table>
+              <thead><tr><th>PROCESS</th><th>PID</th><th>CPU</th><th>MEMORY</th><th>SHARE</th></tr></thead>
+              <tbody id="process-rows"><tr><td colspan="5" class="empty-state">Collecting process samples…</td></tr></tbody>
+            </table>
+          </div>
+          <p class="table-note">Names only. Command arguments and environment values are never collected.</p>
+        </article>
+
+        <article class="panel builds-panel">
+          <div class="section-heading">
+            <div><p class="eyebrow">NIXCI ACTIVITY</p><h3>Recent build tree</h3></div>
+            <span class="quiet-label" id="suite-count">Refreshing…</span>
+          </div>
+          <div class="tree-legend"><span class="legend-item"><i class="legend-dot queued"></i>Queued</span><span class="legend-item"><i class="legend-dot running"></i>Running</span><span class="legend-item"><i class="legend-dot success"></i>Complete</span></div>
+          <div class="build-tree" id="build-tree"><p class="empty-state">Looking for recent NixCI suites…</p></div>
+          <p class="table-note">The tree follows suite and job records reported by NixCI; derivation dependencies are not inferred.</p>
+        </article>
+      </section>
+
+      <footer class="page-footer"><span>NIXCI OBSERVATORY <i>·</i> READ ONLY</span><span id="feed-status">Local metrics and public suite status</span></footer>
+    </main>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
