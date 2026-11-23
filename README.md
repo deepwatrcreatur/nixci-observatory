@@ -51,6 +51,17 @@ command-line arguments. Suite status and job names come from GitHub commit
 statuses and NixCI's public suite pages. The tree represents NixCI-reported
 jobs; it does not infer derivation dependencies.
 
+## Worker attribution
+
+The worker panel measures Emerald's safe worker VM CPU and memory use. This
+shows the load of that VM on Emerald, but resource use alone cannot prove a
+NixCI build is running. The public suite records do not identify which worker
+handled a job, so this dashboard does not label a suite as an Emerald build.
+NixCI's self-hosting module documents per-slot `job.json` records inside the
+guest VM; this deployment does not currently expose those records to the host.
+Per-job attribution would need an approved local feed from the guest or a
+worker identity in NixCI's public status/API.
+
 ## Screenshots
 
 Screenshots live under [`docs/screenshots/`](docs/screenshots/). They show the
