@@ -62,6 +62,10 @@ guest VM; this deployment does not currently expose those records to the host.
 Per-job attribution would need an approved local feed from the guest or a
 worker identity in NixCI's public status/API.
 
+See the [design discussions](docs/discussions/README.md) for the multi-provider
+roundtable and the [short owner brief](docs/owner-brief.md) for a presentation-ready
+explanation of the screenshot and the attribution gap.
+
 ## Screenshots
 
 Screenshots live under [`docs/screenshots/`](docs/screenshots/). They show the
